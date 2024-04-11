@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>족태음비경</title>
+<style>
+    .container {
+    position: relative;
+    width: 1324px; /* 이미지의 원본 너비로 설정 */
+    height: 768px; /* 이미지의 원본 높이로 설정 */
+    margin: 0 auto; /* 페이지 중앙 정렬 */
+    }
+
+    img {
+    width: 1024px; /* 이미지의 원본 너비로 설정 */
+    height: 768px; /* 이미지의 원본 높이로 설정 */
+    display: block; /* 이미지가 컨테이너를 꽉 채우도록 */
+    }
+    .acupoint {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+    .modal {
+        background-color: #fff;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        z-index: 1000;
+        position: absolute;
+        width: auto; /* 너비를 자동으로 조절합니다. */
+        max-width: 50%; /* 최대 너비를 화면 너비의 50%로 설정합니다. */
+        overflow-y: auto;
+        display: none;
+    }
+    /* 모달 내부 텍스트 스타일 */
+    .modal-content {
+        font-size: 16px; /* 글꼴 크기를 조정합니다. */
+        line-height: 1.6; /* 줄 간격을 조정합니다. */
+    }
+    button {
+        background-color: #f7f7f7;
+        border: 1px solid #ddd;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+    .modal.active {
+        display: block;
+    }
+    .modal img {
+    max-width: 100%; /* 이미지가 모달 너비를 초과하지 않도록 설정 */
+    max-height: 400px; /* 이미지의 최대 높이를 제한 */
+    display: block; /* 이미지를 블록 요소로 설정하여 줄바꿈 */
+    margin: 0 auto; /* 이미지를 모달 중앙에 위치시킴 */
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <img src="img_1.jpg" alt="폐(LU) 경락 지점 이미지">
+    <!-- 점 위치를 지정할 div들 -->
+    <div class="acupoint" style="top: 95%; left: 42.5%;" onclick="openModal('1', event);"></div>
+    <div class="acupoint" style="top: 90%; left: 43.5%;" onclick="openModal('2', event);"></div>
+    <div class="acupoint" style="top: 83.5%; left: 44.5%;" onclick="openModal('3', event);"></div>
+    <div class="acupoint" style="top: 77%; left: 45%;" onclick="openModal('4', event);"></div>
+    <div class="acupoint" style="top: 68.5%; left: 45.5%;" onclick="openModal('5', event);"></div>
+    <div class="acupoint" style="top: 57.5%; left: 44.3%;" onclick="openModal('6', event);"></div>
+    <div class="acupoint" style="top: 52.5%; left: 44.5%;" onclick="openModal('7', event);"></div>
+    <div class="acupoint" style="top: 46.5%; left: 44.3%;" onclick="openModal('8', event);"></div>
+    <div class="acupoint" style="top: 40%; left: 44%;" onclick="openModal('9', event);"></div>
+    <div class="acupoint" style="top: 25%; left: 45%;" onclick="openModal('10', event);"></div>
+    <div class="acupoint" style="top: 1.5%; left: 44%;" onclick="openModal('11', event);"></div>
+    <div id="modal" class="modal">
+        <div id="modal-content"></div>
+        <button onclick="closeModal();">닫기</button>
+    </div>
+</div>
+<script>
+const acupoints = {
+        "1": {
+            description: `SP1 은백 (隱白)
+        부위: 엄지발가락, 끝마디뼈(distal phalanx) 안쪽, 엄지발톱 안쪽 뿌리각(medial corner of the toenail)에서 몸 안쪽으로 1分(0.1寸).
+        취혈: 엄지발톱의 안쪽 모서리를 지나는 수직선과 발톱뿌리를 지나는 수평선이 만나는 지점에서 취혈한다.
+        침구법: 직자 0.1～0.2寸, 사자 0.1～0.3寸 (침봉을 상향하여 침입), 삼릉침으로 점자출혈`,
+            imgSrc: "_1.jpg"
+        },
+        "2": {
+            description: `SP2 대도 (大都)
+        부위: 엄지발가락, 첫째 발허리발가락관절(the 1st metatarsophalangeal joint)에서 먼 쪽 오목한 곳, 赤白肉際.
+        침구법: 직자 0.2～0.3寸, 사자 0.3～0.5寸`,
+            imgSrc: "_2.jpg"
+        },
+        "3": {
+            description: `SP3 태백 (太白)
+        부위: 발 안쪽면, 엄지발가락, 첫째 발허리발가락관절(the 1st metatarsophalangeal joint)에서 몸 쪽 오목한 곳의 赤白肉際에 취혈함.
+        침구법: 직자 0.3～0.5寸, 사자 0.3～0.5寸`,
+            imgSrc: "_3.jpg"
+        },
+        "4": {
+            description: `SP4 공손 (公孫)
+        부위: 발 안쪽면, 첫째 발허리뼈바닥(base of the 1st metatarsal bone)의 아래앞쪽, 赤白肉際.
+        취혈: 손가락을 태백(SP3)에서부터 몸 쪽으로 움직이면, 첫째 발허리뼈바닥 먼 쪽에서 촉지되는 오목한 곳에서 취혈한다.
+        침구법: 직자 0.5～1寸, 사자 1～1.5寸, 용천을 향해 1.5～2寸 투침`,
+            imgSrc: "_4.jpg"
+        },
+        "5": {
+            description: `SP5 상구 (商丘)
+        부위: 발 안쪽면, 안쪽복사(medial malleolus) 아래앞쪽, 발배뼈거친면(tuberosity of the navicular bone)과 안쪽복사 융기(prominence of the medial malleolus)를 연결하는 선 중간의 오목한 곳.
+        취혈: 안쪽복사 앞모서리를 지나는 수직선과 아래모서리를 지나는 수평선이 만나는 지점에서 취혈한다.
+        침구법: 직자 0.3～0.5寸, 침봉을 해계(ST41)를 향해 1～1.5寸 횡침`,
+            imgSrc: "_5.jpg"
+        },
+        "6": {
+            description: `SP6 삼음교 (三陰交)
+        부위: 종아리 정강뼈면, 정강뼈 안쪽모서리(medial border of the tibia) 뒤쪽, 안쪽복사 융기(prominence of the medial malleolus)에서 위로 3寸.
+        취혈: 안쪽복사융기에서 위로 3寸 부위에 취혈함.
+        침구법: 직자 1～1.5寸, 족부병 치료시는 침봉을 약간 후방으로 향해 1～1.5寸 침입, 체간부 질환 치료시는 침봉을 약간 상향하여 침입하거나 현종(GB39)으로 투침하기도 한다. 임신부에는 사용을 자제해야 함.`,
+            imgSrc: ""
+        },
+        "7": {
+            description: `SP7 누곡 (漏谷)
+        부위: 종아리 정강뼈면, 정강뼈 안쪽모서리 뒤쪽, 안쪽복사 융기에서 위로 6寸.
+        취혈: 삼음교(SP6)에서 위쪽으로 3寸지점에 해당됨.
+        침구법: 직자 0.5～1寸, 사자 1～1.5寸`,
+            imgSrc: ""
+        },
+        "8": {
+            description: `SP8 지기 (地機)
+        부위: 종아리 정강뼈면, 정강뼈 안쪽모서리 뒤쪽, 음릉천(SP9)에서 아래쪽으로 3寸 부위.
+        침구법: 직자 0.5～1寸, 사자 1～2寸`,
+            imgSrc: "_8.jpg"
+        },
+        "9": {
+            description: `SP9 음릉천 (陰陵泉)
+        부위: 종아리 정강뼈면, 정강뼈 안쪽관절융기 아래모서리와 정강뼈 안쪽모서리 사이의 오목한 곳.
+        취혈: 손가락을 정강뼈 안쪽모서리를 따라서 몸 쪽으로 움직이면 무릎관절 아래에 오목한 곳이 느껴진다.
+        침구법: 직자 0.5～1寸, 사자 1～1.5寸, 양릉천(GB34)으로 투침하기도 한다.`,
+            imgSrc: "_9.jpg"
+        },
+        "10": {
+            description: `SP10 혈해 (血海)
+        부위: 넓적다리 앞 안쪽면, 안쪽넓은근(vastus medialis muscle)이 튀어나온 곳, 무릎뼈바닥(base of the patella) 안쪽 끝에서 위로 2寸.
+        취혈: 환자로 하여금 바르게 앉아 무릎을 굽히게 하고, 의사의 손바닥을 환자 무릎에 올려 손바닥을 무릎뼈꼭지 끝에 대고, 엄지손가락과 검지손가락이 이루는 각이 45°가 되도록 벌려서, 엄지손가락을 넓적다리 안쪽으로 향하게 하여 무릎뼈를 감싸듯이 손을 내렸을 때, 엄지손가락 끝이 닿는 곳에서 취혈한다.
+        침구법: 직자 0.5～0.8寸, 사자 1～1.5寸`,
+            imgSrc: ""
+        },
+        "11": {
+            description: `SP11 기문 (箕門)
+        부위: 넓적다리 안쪽면, 무릎뼈바닥(base of the patella) 안쪽끝과 충문(SP12)을 연결하는 선에서 위로부터 1/3과 아래로부터 2/3가 되는 지점, 긴 모음근(adductor longus muscle)과 넙다리빗근(sartorius muscle) 사이, 넙다리동맥(femoral artery)이 뛰는 곳.
+        취혈: 엄지손가락의 끝이 닿는 곳에서 취혈한다.
+        침구법: 직자 0.3～0.5寸 (동맥을 피하여 침입), 사자 0.5～0.8寸, 깊게 침입하지 않음`,
+            imgSrc: ""
+        }
+        };
+
+
+        function openModal(id, event) {
+        const modal = document.getElementById('modal');
+        const modalContent = document.getElementById('modal-content');
+        const acupoint = event.target; // 클릭된 경락 점 요소
+        const acupointData = acupoints[id];
+
+        // 이미지 태그를 포함할 수 있는 조건을 추가합니다.
+        let imageTag = '';
+        if (acupointData.imgSrc) {
+            imageTag = `<img src="${acupointData.imgSrc}" alt="경락 점 ${id}" style="max-width: 100%; height: auto;">`;
+        }
+
+        // 이미지 태그와 설명을 모달에 추가합니다.
+        modalContent.innerHTML = `
+            <p>${acupointData.description.replace(/\n/g, '<br>')}</p>
+            ${imageTag}`;
+
+        // 클릭된 경락 점 위치를 가져옵니다.
+        const acupointRect = acupoint.getBoundingClientRect();
+
+        // 모달을 경락 점 바로 아래에 위치시킵니다.
+        modal.style.top = `${acupointRect.bottom + window.scrollY}px`;
+        modal.style.left = `${acupointRect.left + window.scrollX}px`;
+
+        modal.classList.add('active');
+}
+
+    function closeModal() {
+        document.getElementById('modal').classList.remove('active')
+    }
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeModal();
+        }
+    });
+
+    window.onclick = function(event) {
+        const modal = document.getElementById('modal');
+        if (event.target === modal) {
+            closeModal();
+        }
+    };
+</script>
+</body>
+</html>
